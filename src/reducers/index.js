@@ -1,8 +1,48 @@
+import { SMURFS_LOADED_FAILURE, SMURFS_LOADED_SUCCESS, SMURFS_LOADING, ADD_SMURF } from "../actions";
 
 export const initialState = {
+    smurfs: [],
+    smurfsLoaded: false,
+    errorMessage: '' 
 }
 
-const reducer = ()=>{
+const reducer = (state=initialState, action)=>{
+    switch(action.type) {
+        case(SMURFS_LOADING): {
+            console.log('Loading!');
+            return {
+                smurfsLoaded: false
+            };
+        };
+
+        case(SMURFS_LOADED_SUCCESS): {
+            console.log('Success!');
+            return {
+                smurfsLoaded: true,
+                smurfs: [...action.payload]
+            };
+        };
+
+        case(SMURFS_LOADED_FAILURE): {
+            console.log('Failure!');
+            return {
+                errorMessage: 'There has been an error with your request!'
+            };
+        };
+
+        case(ADD_SMURF): {
+            return {
+                smurfsLoaded: true,
+                smurfs: [
+                    ...state.smurfs,
+                    action.payload
+                ]
+            };
+        };
+
+        default:
+            return state;
+    }
 }
 
 //**************DO NOT EDIT ANY CODE BEYOND THIS POINT**************//
